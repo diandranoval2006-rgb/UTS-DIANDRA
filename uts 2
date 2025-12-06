@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Form Pendaftaran - UTS Web Desain</title>
+  <style>
+    :root{
+      --bg:#f3f6fb;
+      --card:#ffffff;
+      --accent:#2b6cb0;
+      --muted:#6b7280;
+      --danger:#e53e3e;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(180deg,var(--bg),#e9f0fb);
+      padding:24px;
+    }
+    .container{
+      width:100%;
+      max-width:920px;
+      background:var(--card);
+      border-radius:12px;
+      box-shadow:0 10px 30px rgba(20,30,60,0.08);
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      overflow:hidden;
+    }
+
+    /* left illustration / header */
+    .hero{
+      background:linear-gradient(180deg, rgba(43,108,176,0.08), rgba(43,108,176,0.03));
+      padding:32px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      align-items:flex-start;
+    }
+    .logo{
+      font-weight:700;
+      color:var(--accent);
+      font-size:18px;
+    }
+    .headline{
+      margin-top:6px;
+      font-size:20px;
+      color:#0b243b;
+      font-weight:700;
+    }
+    .sub{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* form side */
+    .formside{
+      padding:28px;
+    }
+    form{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    label{ font-size:13px; color:#263238; font-weight:600; }
+    input[type="text"], input[type="password"], input[type="number"], select{
+      padding:10px 12px;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      font-size:14px;
+      outline:none;
+    }
+    input:focus, select:focus { box-shadow:0 0 0 3px rgba(43,108,176,0.08); border-color:var(--accent); }
+
+    .row{
+      display:flex;
+      gap:12px;
+    }
+    .row .field{ flex:1; }
+
+    .actions{
+      display:flex;
+      gap:8px;
+      margin-top:8px;
+    }
+    button{
+      padding:10px 14px;
+      border-radius:8px;
+      border:0;
+      font-weight:600;
+      cursor:pointer;
+    }
+    .btn-primary{ background:var(--accent); color:white; }
+    .btn-ghost{ background:transparent; border:1px solid #cbd5e1; color:#111827; }
+
+    /* success page */
+    .success{
+      display:none;
+      padding:28px;
+      gap:12px;
+      align-items:flex-start;
+    }
+    .success.show{ display:flex; flex-direction:column; }
+
+    .summary{
+      background:#f8fafc;
+      padding:12px;
+      border-radius:8px;
+      width:100%;
+    }
+    .summary p{ margin:6px 0; color:#111827; font-weight:600; }
+    .muted{ color:var(--muted); font-weight:500; font-size:13px; }
+
+    .error{
+      color:var(--danger);
+      font-size:13px;
+      margin-top:4px;
+      display:none;
+    }
+    .error.show{ display:block; }
+
+    /* responsive */
+    @media (max-width:880px){
+      .container{ grid-template-columns: 1fr; }
+      .hero{ order: -1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main" aria-labelledby="title">
+    <div class="hero" aria-hidden="false">
+      <div class="logo">UNIT UTS - Web Desain (2)</div>
+      <div id="title" class="headline">Form Pendaftaran</div>
+      <div class="sub">Isilah data sesuai validasi. Jika tidak sesuai, akan muncul pesan error.</div>
+      <div class="sub">Catatan: Password harus lebih dari 6 karakter (min 7). Age harus &gt; 17.</div>
+    </div>
+
+    <!-- FORM -->
+    <div class="formside" id="form-area">
+      <form id="regForm" novalidate>
+        <div class="row">
+          <div class="field">
+            <label for="username">Username <span class="muted">*</span></label>
+            <input id="username" name="username" type="text" autocomplete="username" placeholder="Masukkan username" aria-describedby="err-username" />
+            <div id="err-username" class="error" role="alert" aria-live="assertive"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="firstname">First Name <span class="muted">*</span></label>
+            <input id="firstname" name="firstname" type="text" placeholder="First name" aria-describedby="err-firstname" />
+            <div id="err-firstname" class="error" role="alert" aria-live="assertive"></div>
+          </div>
+          <div class="field">
+            <label for="lastname">Last Name <span class="muted">*</span></label>
+            <input id="lastname" name="lastname" type="text" placeholder="Last name" aria-describedby="err-lastname" />
+            <div id="err-lastname" class="error" role="alert" aria-live="assertive"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" aria-label="Gender">
+              <option value="">-- Pilih --</option>
+              <option value="Laki-laki">Laki-laki</option>
+              <option value="Perempuan">Perempuan</option>
+              <option value="Lainnya">Lainnya</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="age">Age <span class="muted">*</span></label>
+            <input id="age" name="age" type="number" min="0" placeholder="Usia (tahun)" aria-describedby="err-age" />
+            <div id="err-age" class="error" role="alert" aria-live="assertive"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="password">Password <span class="muted">*</span></label>
+            <input id="password" name="password" type="password" autocomplete="new-password" placeholder="Minimal 7 karakter" aria-describedby="err-password" />
+            <div id="err-password" class="error" role="alert" aria-live="assertive"></div>
+          </div>
+          <div class="field">
+            <label for="retype">Retype Password <span class="muted">*</span></label>
+            <input id="retype" name="retype" type="password" autocomplete="new-password" placeholder="Ketik ulang password" aria-describedby="err-retype" />
+            <div id="err-retype" class="error" role="alert" aria-live="assertive"></div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn-primary">Daftar</button>
+          <button type="button" id="resetBtn" class="btn-ghost">Reset</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- SUCCESS / RESULT -->
+    <div class="success" id="success-area" aria-hidden="true">
+      <h2 style="margin:0 0 6px 0; color:var(--accent)">Pendaftaran Berhasil</h2>
+      <div class="muted">Data yang Anda masukkan telah tervalidasi sesuai ketentuan.</div>
+
+      <div class="summary" id="summaryBox" role="region" aria-live="polite">
+        <!-- isi nanti lewat JS -->
+      </div>
+
+      <div style="display:flex; gap:8px; margin-top:12px;">
+        <button id="backBtn" class="btn-ghost">Back to Home Page</button>
+        <button id="finishBtn" class="btn-primary">Selesai</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const form = document.getElementById('regForm');
+      const username = document.getElementById('username');
+      const firstname = document.getElementById('firstname');
+      const lastname = document.getElementById('lastname');
+      const gender = document.getElementById('gender');
+      const age = document.getElementById('age');
+      const password = document.getElementById('password');
+      const retype = document.getElementById('retype');
+
+      const formArea = document.getElementById('form-area');
+      const successArea = document.getElementById('success-area');
+      const summaryBox = document.getElementById('summaryBox');
+      const backBtn = document.getElementById('backBtn');
+      const finishBtn = document.getElementById('finishBtn');
+      const resetBtn = document.getElementById('resetBtn');
+
+      // error elements
+      const err = {
+        username: document.getElementById('err-username'),
+        firstname: document.getElementById('err-firstname'),
+        lastname: document.getElementById('err-lastname'),
+        age: document.getElementById('err-age'),
+        password: document.getElementById('err-password'),
+        retype: document.getElementById('err-retype'),
+      };
+
+      function showInlineError(fieldKey, message){
+        // fieldKey should match one of err keys
+        clearInlineError(fieldKey);
+        if(err[fieldKey]){
+          err[fieldKey].textContent = message;
+          err[fieldKey].classList.add('show');
+        } else {
+          alert(message); // fallback
+        }
+      }
+      function clearInlineError(fieldKey){
+        if(fieldKey && err[fieldKey]){
+          err[fieldKey].textContent = '';
+          err[fieldKey].classList.remove('show');
+        } else if(!fieldKey){
+          // clear all
+          Object.keys(err).forEach(k => {
+            err[k].textContent = '';
+            err[k].classList.remove('show');
+          });
+        }
+      }
+
+      // Utility: show alert and focus (kept for backward compatibility)
+      function showAlert(msg, el, fieldKey){
+        // prefer inline error
+        if(fieldKey) showInlineError(fieldKey, msg);
+        else alert(msg);
+        if(el) el.focus();
+      }
+
+      form.addEventListener('submit', function(ev){
+        ev.preventDefault();
+        clearInlineError(); // clear previous errors
+
+        // VALIDASI SESUAI SOAL:
+        // Username: Harus diisi (non-empty, trim)
+        if(!username.value.trim()){
+          showAlert('Username harus diisi.', username, 'username');
+          return;
+        }
+
+        // First Name: Harus diisi
+        if(!firstname.value.trim()){
+          showAlert('First Name harus diisi.', firstname, 'firstname');
+          return;
+        }
+
+        // Last Name: Harus diisi
+        if(!lastname.value.trim()){
+          showAlert('Last Name harus diisi.', lastname, 'lastname');
+          return;
+        }
+
+        // Password: Harus lebih dari 6 karakter -> minimal 7
+        if(!password.value){
+          showAlert('Password harus diisi.', password, 'password');
+          return;
+        }
+        if(password.value.length <= 6){
+          showAlert('Password harus lebih dari 6 karakter (minimal 7).', password, 'password');
+          return;
+        }
+
+        // Retype Password: Harus sama dengan field password
+        if(retype.value !== password.value){
+          showAlert('Retype Password harus sama dengan Password.', retype, 'retype');
+          return;
+        }
+
+        // Age: harus diatas 17 tahun (strictly > 17)
+        const ageVal = Number(age.value);
+        if(!age.value || isNaN(ageVal)){
+          showAlert('Age harus diisi dengan angka.', age, 'age');
+          return;
+        }
+        if(ageVal <= 17){
+          showAlert('Age harus diatas 17 tahun.', age, 'age');
+          return;
+        }
+
+        // Jika sampai sini, validasi terpenuhi -> tampilkan halaman hasil
+        renderSuccess();
+      });
+
+      function renderSuccess(){
+        // siapkan ringkasan data (tidak menampilkan password secara lengkap -- tampilkan masked berdasarkan panjang password)
+        const maskedPass = '*'.repeat(Math.max(1, password.value.length));
+        summaryBox.innerHTML = `
+          <p>Username: <span class="muted">${escapeHtml(username.value)}</span></p>
+          <p>First Name: <span class="muted">${escapeHtml(firstname.value)}</span></p>
+          <p>Last Name: <span class="muted">${escapeHtml(lastname.value)}</span></p>
+          <p>Gender: <span class="muted">${escapeHtml(gender.value || '-')}</span></p>
+          <p>Age: <span class="muted">${escapeHtml(age.value)}</span></p>
+          <p>Password: <span class="muted">${maskedPass} (disembunyikan)</span></p>
+        `;
+
+        // toggle tampilan
+        formArea.style.display = 'none';
+        successArea.classList.add('show');
+        successArea.setAttribute('aria-hidden', 'false');
+        window.scrollTo({top:0, behavior:'smooth'});
+      }
+
+      // Back button: kembali ke form (preserve nilai)
+      backBtn.addEventListener('click', function(){
+        successArea.classList.remove('show');
+        successArea.setAttribute('aria-hidden', 'true');
+        formArea.style.display = '';
+        window.scrollTo({top:0, behavior:'smooth'});
+      });
+
+      // Finish: hanya menampilkan alert dan reset form
+      finishBtn.addEventListener('click', function(){
+        alert('Pendaftaran selesai. Terima kasih!');
+        form.reset();
+        clearInlineError();
+        successArea.classList.remove('show');
+        successArea.setAttribute('aria-hidden', 'true');
+        formArea.style.display = '';
+      });
+
+      resetBtn.addEventListener('click', function(){
+        if(confirm('Reset semua field?')) {
+          form.reset();
+          clearInlineError();
+        }
+      });
+
+      // Simple HTML escape to prevent injection in summary
+      function escapeHtml(s){
+        return String(s)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      // PREFILL: gunakan data contoh tetapi TIDAK memprefill password demi keamanan
+      (function prefill(){
+        try {
+          username.value = 'Diandra Julianoval';
+          firstname.value = 'Diandra';
+          lastname.value = 'Julianoval';
+          gender.value = 'Laki-laki';
+          age.value = '19';
+          // intentionally do NOT prefill password fields for security / to force correct password entry
+        } catch(e){ /* ignore */ }
+      })();
+
+    })();
+  </script>
+</body>
+</html>
